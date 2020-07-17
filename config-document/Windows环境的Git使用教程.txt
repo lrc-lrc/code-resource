@@ -18,4 +18,4 @@ Windows环境下的Git使用教程：
 	（5）git push -u origin master               // 把本地仓库的文件推送到远程仓库
 	注：每输入一次指令就按 '回车键'，执行推送到远程仓库指令时会弹出输入github服务器的用户名和用户密码
 	
-5. 
+5. git config --global credential.helper store   // 记住账号和密码，以后推送就不用再输入了
