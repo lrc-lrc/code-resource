@@ -1,0 +1,21 @@
+Windows环境下的Git使用教程：
+
+1. 登录github官网，创建个远程仓库；
+
+2. 先下载安装git，下载地址：https://git-scm.com/downloads，安装就一直按 'next' ，最后按 'finish'，即安装成功；
+
+3. 安装完成后，选个位置创建文件夹，在当前创建文件右键选择 'Git Bash' ，若没输入过以下指令，则在弹出的窗口输入以下指令：
+		$ git config --global user.name "Your Name"
+		$ git config --global user.email "email@example.com"
+	其中Your Name改成你的名字，email@example.com改成你的Email地址；
+	注：每输入一次指令就按 '回车键'
+	
+4. git创建新仓库的正确步骤，依次输入以下指令：
+	（1）git init                                // 初始化仓库
+	（2）git add . 或 git add fileName           // 添加文件到本地仓库，其中 '.' ：所有文件，'fileName' ：指定的文件名
+	（3）git commit -m "描述"                    // 添加文件描述信息
+	（4）git remote add origin 远程仓库地址      // 链接远程仓库，创建主分支
+	（5）git push -u origin master               // 把本地仓库的文件推送到远程仓库
+	注：每输入一次指令就按 '回车键'，执行推送到远程仓库指令时会弹出输入github服务器的用户名和用户密码
+	
+5. 
