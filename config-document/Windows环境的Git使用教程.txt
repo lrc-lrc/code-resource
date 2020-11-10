@@ -1,4 +1,4 @@
-Windows环境下的Git使用教程：
+（1）Windows环境下的Git使用教程：
 
 1. 登录github官网，创建个远程仓库；
 
@@ -19,3 +19,14 @@ Windows环境下的Git使用教程：
 	注：每输入一次指令就按 '回车键'，执行推送到远程仓库指令时会弹出输入github服务器的用户名和用户密码
 	
 5. git config --global credential.helper store   // 记住账号和密码，以后推送就不用再输入了
+
+
+（2）git的指令集合：
+	git config --list 
+1. git config user.name    // 查看用户名
+2. 
+
+
+
+
+

@@ -1,0 +1,20 @@
+1. Eclipse中配置文件和XML设置字符集教程:
+	Window->Preferences->General->Content Types
+	Text->Java Properties File，然后在Default encoding输入框中输入UTF-8，设置Properties文件的字符集编码
+	或 Text->XML，然后在Default encoding输入框中输入UTF-8，设置XML文件的字符集编码.
+	
+	
+2. Eclipse设置Git默认仓库文件夹教程:
+	window -> Preferences -> Team -> Git -> 在Git界面，在"Default repository folder"中点击Browser选择默认仓库文件夹.
+	
+	
+3. Eclipse在保存代码时自动格式化设置教程:
+	window -> Preferences -> Java -> Editor -> Save Action -> 在Save Action内容界面，先勾选"Perform the selected actions on save", 
+	再勾选"Format edited lines".
+
+	
+4. Eclipse代码自动提示设置教程：
+	window -> Preferences -> Java -> Editor -> Content Assist -> 在Content Assist界面，在"Auto activation triggers for Java"的
+	文本框中输入abcdefghijklmnopqrstuvwxyz.即可.
+	
+
