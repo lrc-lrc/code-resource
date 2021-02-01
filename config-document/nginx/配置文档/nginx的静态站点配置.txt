@@ -1,0 +1,35 @@
+静态站点配置
+有时候，我们需要配置静态站点(即 html 文件和一堆静态资源)。
+
+举例来说：如果所有的静态资源都放在了 /app/dist 目录下，我们只需要在 nginx.conf 中指定首页以及这个站点的 host 即可。
+
+配置如下：
+
+
+worker_processes  1;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    sendfile        on;
+    keepalive_timeout  65;
+
+    gzip on;
+    gzip_types text/plain application/x-javascript text/css application/xml text/javascript application/javascript image/jpeg image/gif image/png;
+    gzip_vary on;
+
+    server {
+        listen       80;
+        server_name  static.zp.cn;
+
+        location / {
+            root /app/dist;
+            index index.html;
+            #转发任何请求到 index.html
+        }
+    }
+}
