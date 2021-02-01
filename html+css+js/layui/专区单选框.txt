@@ -1,0 +1,31 @@
+HTML内容：
+
+	<!-- 专区单选按钮 -->
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<div style="padding: 15px 15px 15px 0px;" >
+								<div>
+									<label style="font-weight: bold;">专区[单选]</label>
+								</div>
+								<div class="zoneDiv">
+									#if(${zoneList} && ${zoneList.size()} > 0)
+									<ul style="margin: 0; padding: 0;">
+										#foreach(${zone} in ${zoneList})
+										<li class="zoneBean" title="${zone.name}(${zone.id})" style="liststyle: none; float: left; width: 150px;margin-top:15px; margin-left: 1px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left;">
+											<input id="zone_${zone.id}" type="radio" name="zid" value="${zone.id}" #foreach(${zoneId} in ${zoneIds})  #if($!{zoneId} == ${zone.id}) checked="checked" #end  #end>
+											<label for="zone_${zone.id}" style="font-weight: bold;" >${zone.name}(${zone.id})</label>
+										</li>
+										#end
+									</ul>
+									#end
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+JS代码：
+
+	$('input[type="radio"]').iCheck({
+					radioClass:'iradio_square-green'
+				});

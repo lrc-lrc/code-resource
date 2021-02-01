@@ -1,0 +1,37 @@
+ <button id="btn_class_addLine" class="layui-btn layui-btn-small" title="添加一行">
+                    <i class="layui-icon">&#xe608;</i> 添加一行
+                </button>
+
+
+
+
+
+ /** 删除邮件点击事件 */
+                $('.delete').on('click', function () {
+                    var defineId = $(this).prop('id');
+                    layer.confirm('确定删除邮件?', {icon: 3, title: '提示'}, function (index) {
+                        $.ajax({
+                            method: 'POST',
+                            url: '${base}/avatar/deleteEmail',
+                            data: {
+                                "email": defineId
+                            },
+                            success: function (status) {
+                                var deleteId = 'delete_' + defineId;
+                                if (status == 'success') {
+                                    $('#' + deleteId).remove();
+                                } else {
+                                    layer.alert('操作失败!', {
+                                        title: '操作结果'
+                                    });
+                                }
+                            },
+                            error: function () {
+                                layer.alert('操作失败!', {
+                                    title: '操作结果'
+                                });
+                            }
+                        });
+                        layer.close(index);
+                    });
+                });

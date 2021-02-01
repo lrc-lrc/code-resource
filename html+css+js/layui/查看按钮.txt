@@ -1,0 +1,22 @@
+HTML内容：
+
+	<!-- 查看异常原因 -->
+	<td>
+		<a href="javascript:;" class="content layui-btn layui-btn-small" id="${bean.id}">
+			<i class="layui-icon">&#xe615;</i> 查看
+		</a>
+		<div style="display: none;" id="content_${bean.id}">$!{bean.reason}</div>
+	</td>
+
+
+
+
+
+
+JS代码：
+
+	/* 查看异常原因 */
+	$('.content').on('click',function(){
+		var defineId = $(this).prop('id');
+		layer.alert($('#content_'+defineId).html(), {icon: 7, title:'异常原因如下：'});
+	});

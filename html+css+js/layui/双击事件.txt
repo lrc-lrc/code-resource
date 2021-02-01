@@ -1,0 +1,6 @@
+/** 扩展信息双击事件 */
+				$('#div_id_expand').on('dblclick', function(){
+					$('#textarea_explain').removeAttr("disabled");
+					$('#save').show();
+					$('#div_id').show();
+				});

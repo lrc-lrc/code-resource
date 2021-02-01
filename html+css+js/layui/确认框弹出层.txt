@@ -1,0 +1,24 @@
+layer.confirm('确定删除?', {icon: 3, title:'提示'}, function(index){
+						$.ajax({
+							method : 'POST',
+							url : '${base}/crossmovinggrouptable/delete',
+							data : {
+								"id":id
+							},
+							success : function(status){
+								if("success" == status){
+									layer.alert('删除成功!', {
+										title: '操作结果'
+									});
+								}else{
+									layer.alert('删除失败!', {
+										title: '操作结果'
+									});
+								}
+								var searchForm = $('#searchForm');
+								searchForm.attr("action","${base}/crossmovinggrouptable/query");
+								searchForm.submit();
+							}
+						});
+					  	layer.close(index);
+					});

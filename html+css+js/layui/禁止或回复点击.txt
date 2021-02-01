@@ -1,0 +1,5 @@
+HTMLÄÚÈÝ£º
+
+	<!-- ½ûÖ¹µã»÷ -->
+	<a style="pointer-events: none; color: "/>
+	<a style="pointer-events: auto;"/>

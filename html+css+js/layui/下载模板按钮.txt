@@ -1,0 +1,41 @@
+HTML内容：
+	
+	<!-- 下载模板 -->
+	<div class="layui-inline">
+		<a href="javascript:;" id="download" class="layui-btn layui-btn-small"  style="float: left;">
+			<i class="layui-icon">&#xe601;</i> 下载模板
+		</a>
+	</div>
+	
+	
+	
+	
+JS代码：
+	
+	/* 下载模板 */
+	$('#download').on('click', function() {
+		var url = '${base}/crossmovinggrouptable/download';
+		location.href = url;
+	});
+	
+	
+
+Java代码：
+
+	@Permission(id = 22606, parent = 22600, name = "下载模板")
+	public void download() {
+		// 获取模板文件的路径
+		String realPath = getSession().getServletContext().getRealPath("/template");
+		Path path = Paths.get(realPath, "WenJuanConfigTemplate.xlsx");
+
+		// 渲染模板文件
+		renderFile(path.toFile());
+	}
+	
+	
+	
+	
+	
+	
+	
+	

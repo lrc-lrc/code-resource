@@ -1,0 +1,9 @@
+HTML内容：
+
+	<div class="select layui-form layui-inline">
+		<select name="orderValue">
+			<option value="">--升降序--</option>
+			<option value="asc" >升序</option>
+			<option value="desc" >降序</option>
+		</select>
+	</div>

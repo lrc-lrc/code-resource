@@ -1,0 +1,136 @@
+HTML内容：
+
+	<form class="" action="${base}/crossmovinggrouptable/query" method="post" id="searchForm">
+		...
+		
+		<!-- 分页的当前页数和每页显示条数 -->
+		#if(${pageResult})
+			<input type="hidden" name="pageNumber" value="${pageResult.pageNumber}">
+			<input type="hidden" name="pageSize" value="${pageResult.pageSize}">
+		#end
+		
+		...
+	</form>
+
+
+	<!-- 总记录数 -->
+	#if(${pageResult})
+		<div  style="float: left;">
+			共有记录  <a id="count" style="color: blue;">${pageResult.totalRow}</a> 条
+		</div>
+	#end
+	
+	
+	<!-- 编辑与删除 -->
+	<td>
+		<button class="toEditPage layui-btn layui-btn-small" title="编辑" value="${bean.id}">
+			<i class="layui-icon">&#xe642;</i>
+		</button>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<button class="delete layui-btn layui-btn-small" title="删除" value="${bean.id}">
+			<i class="layui-icon">&#xe640;</i>
+		</button>
+	</td>
+	
+
+
+	
+	
+	
+JS代码：
+	
+	/* 到编辑页面 */
+	$('.toEditPage').on('click', function() {
+		var id = $(this).attr("value");
+		layer.open({
+			type: 2,
+			title: '编辑全局状态码',
+			content: '${base}/crossmovinggrouptable/toEditPage?id=' + id,
+			area: ['60%', '70%'],
+			maxmin: true,
+			end: function(index) {
+				location.reload();
+			}
+		});
+	}); 
+	
+	/* 删除 */
+	$('.delete').on('click', function() {
+		var id = $(this).attr("value");
+		var count = $('#count').text(); // 获取记录的总数
+		layer.confirm('确定删除ID为【'+ id +'】的数据?', {icon: 3, title:'提示'}, function(index){
+			$.ajax({
+				method : 'POST',
+				url : '${base}/crossmovinggrouptable/delete',
+				data : {
+					"id":id
+				},
+				success : function(status){
+					if("success" == status){
+						layer.alert('删除成功!', {
+							title: '操作结果'
+						});
+						count = count - 1; // 记录的总数-1
+					}else{
+						layer.alert('删除失败!', {
+							title: '操作结果'
+						});
+					}
+					
+					// 解析记录的总数，获取当前页数和每页显示条数
+					var pageNumber = $('input[name="pageNumber"]').val();
+					var pageSize = $('input[name="pageSize"]').val();
+					if(count < pageNumber * pageSize){
+						pageNumber = Math.ceil(count/pageSize);
+						if(pageNumber == 0){
+							pageNumber = 1;
+						}
+					}
+					
+					// 将获取当前页数和页数大小
+					$('input[name="pageNumber"]').val(pageNumber);
+					$('input[name="pageSize"]').val(pageSize);
+					
+					// 提交数据
+					var searchForm = $('#searchForm');
+					searchForm.attr("action","${base}/crossmovinggrouptable/query");
+					searchForm.submit();
+					
+//					location.reload(); // 重载
+				}
+			});
+			layer.close(index);
+		});
+	});
+	
+	
+	// 不刷新页面，只去除html标签
+	/** 删除邮件点击事件 */
+	$('.delete').on('click',function(){
+		var defineId = $(this).prop('id');
+		layer.confirm('确定删除邮件?', {icon: 3, title:'提示'}, function(index){
+			$.ajax({
+				method : 'POST',
+				url : '${base}/avatar/deleteEmail',
+				data : {
+					"email":defineId
+				},
+				success : function(status){
+					var deleteId='delete_'+defineId;
+					if(status=='success'){
+						$('#'+deleteId).remove();
+					}else{
+						layer.alert('操作失败!', {
+							title: '操作结果'
+						});
+					}
+				},
+				error : function(){
+					layer.alert('操作失败!', {
+						title: '操作结果'
+					});
+				}
+			});
+			layer.close(index);
+		});
+	});

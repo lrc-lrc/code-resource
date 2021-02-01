@@ -1,0 +1,67 @@
+CSS样式：
+	
+	/* 复选框未选中时的样式 */
+	input[type="checkbox"]{
+		width: 22px;
+		height: 22px;
+		display: inline-block;
+		vertical-align: middle;
+		line-height: 22px;
+		position: relative;
+		border: 1px solid #ddd;
+		cursor:pointer;
+	}
+
+	/* 复选框绑定的label的样式 */
+	label {
+		cursor:pointer;
+	}
+
+	/* 复选框选中时的样式 */
+	input[type="checkbox"]:checked::before {
+		width: 22px;
+		height: 22px;
+		content: "\2713";
+		font-size: 18px;
+		font-weight: bold;
+		color: #fff;
+		line-height: 22px;
+		text-align: center;
+		position: absolute;
+		background-color: #009688;
+		border: 0px solid #2196F3;
+	}
+
+	
+HTML内容：
+
+	<input type="checkbox" id="checkedAll" #if($vipArr.size() == 13) checked="checked" #end><label for="checkedAll"> 全选  </label>&nbsp;&nbsp;
+	<input type="checkbox" id="checked1" name="vip" value="1" #foreach($vip in $vipArr) #if($vip == 1) checked="checked" #end #end><label for="checked1"> VIP1 </label>&nbsp;&nbsp;
+	
+
+JS内容：
+	
+	/** 全选复选框的选中或未选中改变事件 */
+	$('#checkedAll').on('change', function() {
+		var isChecked= $(this).prop('checked');
+		
+		if (isChecked) {
+			$('input[name="vip"]').not('input:checked').each(function(){
+				$(this).prop('checked', isChecked);
+			});
+		} else {
+			$('input[name="vip"]:checked').each(function(){
+				$(this).prop('checked', isChecked);
+			});
+		}
+	});
+	
+	/** 单个复选框的选中或未选中改变事件 */	
+	$('input[name="vip"]').on('change', function(){
+		var uncheckedArr = $('input[name="vip"]').not('input:checked');
+		if(uncheckedArr.length == 0) {
+			$('#checkedAll').prop('checked', true);
+		} else {
+			$('#checkedAll').prop('checked', false);
+		}
+	});

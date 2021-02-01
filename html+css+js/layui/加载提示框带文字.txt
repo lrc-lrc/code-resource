@@ -1,0 +1,9 @@
+JS内容：
+
+	var msgIndex = layer.msg('上传中...', {
+		icon: 16,   // 图标
+		shade: 0.2, // 遮罩
+		time: false // 等待时间
+	});
+	// 关闭此提示层
+	layer.close(msgIndex);

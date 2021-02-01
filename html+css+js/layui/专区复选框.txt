@@ -1,0 +1,21 @@
+HTML内容：
+
+	<!-- 弹出选择专区复选框框 -->
+	<div style="display: none; padding: 15px;" id="hideZone">
+		<div>
+			<input id="zoneChkAll" type="checkbox"> 
+			<label for="zoneChkAll" style="font-weight: bold;">
+				专区[全选/不选]
+			</label>
+		</div>
+		<div>
+			<ul id="sessionZone" style="margin: 0; padding: 0;"></ul>
+		</div>
+	</div>
+	<div class="layui-form-item" id="zoneChannelServer">
+		<div class="layui-inline">
+			<a href="javascript:;" class="layui-btn layui-btn-small" id="selectZone" style="float: left;"> 
+				选择专区 
+			</a>
+		</div>
+	</div>

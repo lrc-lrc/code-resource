@@ -1,0 +1,36 @@
+HTML内容：
+
+	<!-- 添加 -->
+	<div class="layui-inline" style="float:right;">
+		<a href="javascript:;" class="layui-btn layui-btn-small" id="toAddPage">
+			<i class="layui-icon">&#xe608;</i> 添加
+		</a>
+	</div>
+
+
+
+
+
+JS代码：
+
+	/* 到添加页面 */
+	$('#toAddPage').on('click', function() {
+		layer.open({
+			type: 2,
+			title: '添加数据',
+			content: '${base}/crossmovinggrouptable/toAddPage',
+			area: ['60%', '70%'],
+			maxmin: true,
+			end: function(index) {
+				#if(${pageResult} && ${pageResult.getList()} && ${pageResult.getList().size()} > 0) 
+					// 关闭添加页面时跳转到查询
+					$('input[name="currentPage"]').val(1); // 设置当前页数为1
+					var searchForm = $('#searchForm');
+					searchForm.attr("action","${base}/crossmovinggrouptable/query");
+					searchForm.submit();
+				#end
+				
+//				location.reload(); // 重新加载
+			}
+		});
+	}); 

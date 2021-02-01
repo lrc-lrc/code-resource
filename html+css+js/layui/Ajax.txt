@@ -1,0 +1,18 @@
+JS内容：
+
+	// 发出异步请求
+	$.ajax({
+		type: 'POST',  //请求方式: POST , GET
+		cache: false,
+		url: 'fzz.php?number'+=xxx, //发送请求的地址以及传输的数据
+		dataType: 'JSON',  //服务器返回的数据类型
+		data: {name:xxx,age:xxx},   //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+		async：true， // 默认ajax异步为ture, ajax同步为false
+		success: function(data){ //请求成功函数内容
+			
+		},
+		error:function(jqXHR){ //请求失败函数内容
+			
+		}
+	});
+	// 注：ajax提交表单数据可以用 data: $("#searchForm").serialize() 表示，其中addForm表示表单的id

@@ -1,0 +1,17 @@
+HTML内容：
+
+	<!-- 数字输入框 -->
+	<div class="layui-inline">
+		<input type="text" name="aid" value="$!{aid}" placeholder="角色ID" 
+			   oninput="value=value.replace(/[^\d\w]/g,'')" autocomplete="off" 
+			   class="layui-input" style="height: 32px;">
+	</div>
+	
+	
+	
+	
+	<!-- 普通输入框 -->
+	<div class="layui-inline">
+		<input type="text" name="name" value="$!{name}" placeholder="角色名称" 
+			   autocomplete="off" class="layui-input" style="height: 32px;">
+	</div>

@@ -1,0 +1,19 @@
+HTML内容：
+
+	<!-- 查询 -->
+	<div class="layui-inline">
+		<a href="javascript:;" class="layui-btn layui-btn-small" id="query" style="float: left;">
+			<i class="layui-icon">&#xe615;</i> 查询
+		</a>
+	</div>
+	
+	
+	
+	
+	
+JS代码：
+
+	/* 查询 */
+	$('#query').on('click', function() {
+		$('#queryForm').submit();
+	});

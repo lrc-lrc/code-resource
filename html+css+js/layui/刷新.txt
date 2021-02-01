@@ -1,0 +1,6 @@
+HTML内容：	
+	
+	
+	<i id="flush" class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop" style="display: block; font-size: 25px; text-align: center;">
+		&#xe9aa;
+	</i>

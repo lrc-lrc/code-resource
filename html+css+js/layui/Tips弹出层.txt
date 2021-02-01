@@ -1,0 +1,76 @@
+HTML内容：
+	
+	<!-- 第一种：tips定位在div -->
+	<td>
+		<div onmouseenter="showOtherTip(this,1)" onmouseleave="closeOtherTip(this)">
+			<i class="layui-icon" style="font-size: 25px; text-align: center;">&#xe60b;</i>
+		</div>
+		<div style="display: none;">
+			$!{stringUtils.getHtmlFormatString($!{mail.awards}, 30)}
+		</div>
+	</td>
+	
+	
+	<!-- 第二种：tips定位在td -->
+	<td  onmouseenter="showOtherTip(this,1)" onmouseleave="closeOtherTip(this)">
+		<i class="layui-icon" style="font-size: 25px; text-align: center;">&#xe60b;</i>
+		<div style="display: none;">
+			$!{mail.content}
+		</div>
+	</td>
+	
+	
+JS代码：
+	
+	第一种：
+	
+	/* 悬浮展示信息 */
+	function showOtherTip(this, index) {
+		layui.use(['layer', 'jquery'], function () {
+			var layer = layui.layer;
+			var $ = layui.jquery;
+			var html = $(this).next().html();
+			layer.tips(html, this, {tips: [index, '#ff6700'], time: 0, anim: 5});
+		});
+	}	
+
+	/* 去掉悬浮展示信息 */
+	function closeOtherTip(this) {
+		layui.use(['layer', 'jquery'], function () {
+			layer.closeAll('tips');
+		});
+	}
+	
+	
+	
+	第二种：
+	
+	function showOtherTip(this, index) {
+		layui.use(['layer', 'jquery'], function () {
+			var layer = layui.layer;
+			var $ = layui.jquery;
+			var html = $(this).children().eq(0).html();
+			layer.tips(html, this, {tips: [index, '#ff6700'], time: 0, anim: 5});
+		});
+	}	
+
+	/* 去掉悬浮展示信息 */
+	function closeOtherTip(this) {
+		layui.use(['layer', 'jquery'], function () {
+			layer.closeAll('tips');
+		});
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

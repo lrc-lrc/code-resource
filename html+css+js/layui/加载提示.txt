@@ -1,0 +1,11 @@
+JS内容：
+		
+	// 关闭所有提示框，在页面只用一次
+	layer.closeAll('dialog');
+	
+	// 加载提示
+	layer.open({
+		title: '提示',
+		btn:[],
+		content: '正在加载，请稍后。。。'
+	});

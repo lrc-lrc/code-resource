@@ -1,0 +1,71 @@
+HTML内容：
+	
+	<!-- 任意时间输入框 -->
+	<div class="layui-inline">
+		<input class="layui-input" name="startTime" value="$!{startTime}" placeholder="创建时间(开始)" 
+			   onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" 
+			   autocomplete="off" style="height: 32px;">
+	</div>
+	<div class="layui-inline">
+		<input class="layui-input" name="endTime" value="$!{endTime}" placeholder="创建时间(结束)" 
+			   onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" 
+			   autocomplete="off" style="height: 32px;">
+	</div>
+	
+	
+	
+	
+	<!-- 到当前时间为止输入框 -->
+	<div class="layui-inline">
+		<input class="layui-input" name="startTime" value="$!{startTime}" placeholder="开始时间" 
+		       onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss',max:'${max}'})" 
+			   autocomplete="off" style="height: 32px;">
+	</div>
+	<div class="layui-inline">
+		<input class="layui-input" name="endTime" value="$!{endTime}" placeholder="结束时间" 
+		       onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss',max:'${max}'})" 
+			   autocomplete="off" style="height: 32px;">
+	</div>
+	
+	
+	
+	
+	
+	<!-- 整形日期输入框 -->
+	<div class="layui-inline">
+		<input class="layui-input" name="startDate" value="$!{startDate}" placeholder="开始时间"
+			   onclick="layui.laydate({elem: this, istime: true, format: 'YYYYMMDD'})"
+			   autocomplete="off" style="height: 32px;">
+	</div>
+	<div class="layui-inline">
+		<input class="layui-input" name="endDate" value="$!{endDate}" placeholder="结束时间"
+			   onclick="layui.laydate({elem: this, istime: true, format: 'YYYYMMDD'})"
+			   autocomplete="off" style="height: 32px;" >
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

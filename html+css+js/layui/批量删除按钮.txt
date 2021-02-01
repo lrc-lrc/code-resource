@@ -1,0 +1,184 @@
+﻿HTML内容：
+
+	<!-- 当前页数和页数大小 -->
+	#if(${pageResult})
+		<input type="hidden" id="pageNumber" name="pageNumber" value="${pageResult.getPageNumber()}">
+		<input type="hidden" id="pageSize" name="pageSize" value="${pageResult.getPageSize()}">
+	#end
+	
+	
+	<!-- 全选或不全选所有复选框 -->
+	<table class="site-table table-hover">
+		<thead>
+			<tr>
+				<th><input type="checkbox" id="selectedAll"></th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr>
+				<!-- 选择复选框 -->
+				<td>
+					<input type="checkbox" name="checkItem" value="${bean.id}">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	
+	
+	
+	<!-- 批量删除 -->
+	<div class="layui-inline">
+		<a href="javascript:;" class="layui-btn layui-btn-small" id="batchDelete" style="float: left;">
+			<i class="layui-icon">&#xe640;</i> 批量删除
+		</a>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+JS代码：
+
+	/* 激活iCheck，用来美化单选框、复选框的以及一些回调 */
+	$('input').iCheck({
+		checkboxClass: 'icheckbox_square-green'
+	});
+
+	/* 数据选中样式 */
+	$('.site-table tbody tr').on('click', function(event) {
+		var curTr = $(this);
+		var curInput = $(curTr).children('td').eq(0).find('input');
+		$(curInput).on('ifChecked', function(e) {
+			$(curTr).css('background-color', '#99CCFF');
+		});
+		$(curInput).on('ifUnchecked', function(e) {
+			$(curTr).removeAttr('style');
+		});
+		$(curInput).iCheck('toggle');
+	});
+	
+	$('.site-table tbody tr td').find('input').on('ifChanged',function(event){
+		var state = true; 
+		$('.site-table tbody tr td').find('input').each(function(idx,val){
+			if(!$(this).prop('checked')){
+				state = false; 
+			}
+		});
+		if(state){
+			$('#selected-all').prop('checked', 'checked');
+		}else{
+			$('#selected-all').removeProp('checked');
+		}
+		$('#selected-all').iCheck('update');
+	});
+	
+	/* 全选或不全选所有复选框 */
+	$('#selected-all').on('ifChanged', function(event) {
+		$('.site-table tbody tr td').find('input').iCheck(event.currentTarget.checked ? 'check' : 'uncheck');
+	});
+
+	
+	/* 批量删除 */
+	$('#batchDelete').on('click', function() {
+		var ids = []; 				
+		$("input:checkbox[name='checkItem']:checked").each(function(){
+			var id = $(this).val();
+			ids.push(id);
+		});
+		if(ids.length < 1){
+			layer.msg("请选择要要删除的记录！")
+			return;
+		}
+		var count = $('#count').text(); // 获取记录的总数
+		layer.confirm('确定删除?', {icon: 3, title:'提示'}, function(index){
+			$.ajax({
+				method : 'POST',
+				url : '${base}/crossmovinggrouptable/batchDelete',
+				data : {
+					"ids" : JSON.stringify(ids)
+				},
+				success : function(result){
+					
+					count = count - ids.length;
+					// 解析记录的总数，获取当前页数和页数大小
+					var pageNumber = $('input[name="pageNumber"]').val();
+					var pageSize = $('input[name="pageSize"]').val();
+					if(count < pageNumber * pageSize){
+						pageNumber = Math.ceil(count/pageSize);
+						if(pageNumber == 0){
+							pageNumber = 1;
+						}
+					}
+					
+					// 将获取当前页数和每页显示条数
+					$('input[name="pageNumber"]').val(pageNumber);
+					$('input[name="pageSize"]').val(pageSize);
+					
+					layer.alert(result, function(){					
+						// 提交数据
+						var searchForm = $('#searchForm');
+						searchForm.attr("action","${base}/crossmovinggrouptable/query");
+						searchForm.submit();
+					});
+				}
+			});
+			layer.close(index);
+		});
+	});
+	
+	
+	
+	
+	
+Java代码：
+
+	@Permission(id = 406909, parent = 406900, name = "批量删除")
+	public void batchDelete() {
+		StringBuilder sb1 = new StringBuilder("删除成功：自定义ID为<a style=\"color: green;\">");
+		StringBuilder sb2 = new StringBuilder("删除失败：自定义ID为<a style=\"color: red;\">");
+//		StringBuilder sb3 = new StringBuilder("无需删除：自定义ID为<a style=\"color: LightYellow3;\">");
+
+		String keyStr = getPara("ids", "");
+		keyStr = keyStr.substring(1, keyStr.length() - 1);
+		keyStr = keyStr.replaceAll("\"", "");
+		String[] keys = keyStr.split(",");
+		if (keys.length < 1) {
+			setAttr("msg", "请选择要删除的记录!");
+			renderText("fail");
+		}
+
+		try {
+			String deleteSql = "DELETE FROM operation_activity WHERE id IN (" + keyStr + ")";
+			int num = Db.update(deleteSql);
+			// 遍历自定义id
+			for (String id : keys) {
+//				OperationActivity bean = OperationActivity.dao.findById(new Integer(id));
+				if (num > 0) {
+					sb1.append("【" + id + "】");
+				} else {
+					sb2.append("【" + id + "】");
+				}
+			}
+
+			String result = sb1.toString() + "</a>" + "<br>" + sb2.toString() + "</a>";
+			renderText(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			String result = "批量清除有异常，请刷新重试";
+			renderText(result);
+		}
+
+	}
+
+
+
+
+
+
+
+	

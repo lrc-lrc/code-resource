@@ -1,0 +1,91 @@
+HTML内容：
+
+	<form class="" action="${base}/crossmovinggrouptable/query" method="post" id="queryForm">
+		...
+		
+		<!-- 分页的当前页数和每页显示条数 -->
+		#if(${pageResult})
+			<input type="hidden" name="pageNumber" value="${pageResult.pageNumber}">
+			<input type="hidden" name="pageSize" value="${pageResult.pageSize}">
+		#end
+		
+		...
+	</form>
+
+
+	<!-- 总记录数 -->
+	#if(${pageResult})
+		<div  style="float: left;">
+			共有记录  <a id="count" style="color: blue;">${pageResult.totalRow}</a> 条
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a style="color: red">*注：执行异常不代表全部不执行成功，具体原因请查看异常原因核实</a>
+		</div>
+	#end
+
+	
+	<!-- 分页 -->
+	#if(${pageResult} && ${pageResult.list} && ${pageResult.list.size()} > 0)
+		<div class="admin-table-page">
+			<div id="page" class="page"></div>
+		</div>
+	#end
+
+
+
+
+JS代码：
+
+	
+	/* 分页 */
+	#if(${pageResult} && ${pageResult.list} && ${pageResult.list.size()} > 0)
+		laypage({
+			cont: 'page',
+			curr: ${pageResult.pageNumber}, // 当前页数
+			pages: ${pageResult.totalPage}, // 总页数
+			last: ${pageResult.totalPage}, // 最后页数
+			groups: 5, //连续显示分页数
+			skip:true,
+			jump: function(obj, first) {
+				//得到了当前页，用于向服务端请求对应数据
+				var curr = obj.curr;
+				if(!first){
+					// 获取当前页数
+					$('input[name="pageNumber"]').val(curr);
+					
+					// 提交数据
+					var queryForm = $('#queryForm');
+					queryForm.attr("action","${base}/crossmovinggrouptable/query");
+					queryForm.submit();
+				}
+			}
+		});
+		
+		/* 分页的每页显示条数 */
+		if($('#page').height() > 0){
+			var spanEle = '<span class="layui-laypage-total">每页显示 <select id="pageSize" style="height:28px;border: 1px solid #e2e2e2;border-radius: 2px;"><option value="20" #if(${pageResult.pageSize} == 20) selected #end>20</option><option value="50" #if(${pageResult.pageSize} == 50) selected #end>50</option><option value="100" #if(${pageResult.pageSize} == 100) selected #end>100</option><option value="200" #if(${pageResult.pageSize} == 200) selected #end>200</option></select> 条</span>';
+			$('#layui-laypage-0').append(spanEle);
+		}
+		
+		/* 每页显示条数 */
+		$('#pageSize').on('change', function() {
+			// 将获取当前页数和每页显示条数
+			var pageNumber = ${pageResult.pageNumber};
+			var pageSize = $('#pageSize').val();		
+			var count = ${pageResult.totalRow};
+			if(count < pageNumber * pageSize){
+				pageNumber = Math.ceil(count/pageSize);
+			}	
+			$('input[name="pageNumber"]').val(pageNumber);
+			$('input[name="pageSize"]').val(pageSize);
+			
+			// 提交数据
+			var queryForm = $('#queryForm');
+			queryForm.attr("action","${base}/crossmovinggrouptable/query");
+			queryForm.submit();
+		});
+	#end
+
+
+
+
+
